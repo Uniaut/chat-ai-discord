@@ -3,7 +3,7 @@ import functools
 from revChatGPT.V1 import Chatbot
 
 
-async def ask_v1(instance, prompt, conversation_id):
+async def ask(instance, prompt, conversation_id):
     for data in instance.ask(
         prompt=prompt,
         conversation_id=conversation_id,
