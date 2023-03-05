@@ -3,8 +3,8 @@ import discord.ext.commands as commands
 # import discord context
 from discord.ext.commands.context import Context
 
-import src.chatgpt as chatgpt
-import src.database as database
+import chatgpt.V0 as V0
+import database.V0 as V0
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -29,7 +29,7 @@ async def register(ctx: Context, *args):
     user_auth = {
         'access_token': ' '.join(args)
     }
-    await database.set_user_auth(user_uuid, user_auth)
+    await V0.set_user_auth(user_uuid, user_auth)
     await ctx.channel.send('auth data is successfully registered.')
     await ctx.message.delete()
 
@@ -49,17 +49,17 @@ async def myask(ctx: Context, *args):
     '''
     user_uuid = ctx.message.author.id
     try:
-        user_auth = await database.get_user_auth(user_uuid)
+        user_auth = await V0.get_user_auth(user_uuid)
     except Exception as e:
         dm_channel = await ctx.message.author.create_dm()
         await dm_channel.send('You are not registered, please register first')
         return
     
-    chatbot_instance = chatgpt.get_instance(user_auth)
+    chatbot_instance = V0.get_instance(user_auth)
     prompt = ' '.join(args)
     last_conversation_id = dialog.get(user_uuid, None)
 
-    response, conversation_id = await chatgpt.ask_v1(chatbot_instance, prompt, last_conversation_id)
+    response, conversation_id = await V0.ask_v1(chatbot_instance, prompt, last_conversation_id)
 
     dialog[user_uuid] = conversation_id
     await ctx.reply(response)
