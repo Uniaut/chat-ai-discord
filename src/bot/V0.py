@@ -3,8 +3,8 @@ import discord.ext.commands as commands
 # import discord context
 from discord.ext.commands.context import Context
 
-import chatgpt.V0 as chatgpt
-import database.V0 as database
+import src.chatgpt.V0 as chatgpt
+import src.database.V0 as database
 
 intents = discord.Intents.default()
 intents.message_content = True
