@@ -31,8 +31,8 @@ async def get_user_data(client: pymongo.MongoClient, user_uuid: str) -> dict:
     )
     return user_data
 
-async def set_user_data(client: pymongo.MongoClient, user_uuid: str, user_data: dict) -> None:
-    await client[DATABASE_NAME]['user'].update_one(
+def set_user_data(client: pymongo.MongoClient, user_uuid: str, user_data: dict) -> None:
+    client[DATABASE_NAME]['user'].update_one(
         {'user_uuid': user_uuid},
         {'$set': user_data},
         upsert=True
@@ -44,8 +44,8 @@ auth getter/setter
 async def get_user_auth(client: pymongo.MongoClient, user_uuid: str) -> dict:
     return (await get_user_data(client, user_uuid))['auth']
 
-async def set_user_auth(client: pymongo.MongoClient, user_uuid: str, user_auth: dict) -> None:
-    await set_user_data(client, user_uuid, {
+def set_user_auth(client: pymongo.MongoClient, user_uuid: str, user_auth: dict) -> None:
+    set_user_data(client, user_uuid, {
         'auth': user_auth
     })
 
@@ -55,8 +55,8 @@ last conversation getter/setter
 async def get_last_conversation(client: pymongo.MongoClient, user_uuid: str) -> str:
     return (await get_user_data(client, user_uuid))['conversation']['last_conversation_id']
 
-async def set_last_conversation(client: pymongo.MongoClient, user_uuid: str, conversation_id: str) -> None:
-    await set_user_data(client, user_uuid, {
+def set_last_conversation(client: pymongo.MongoClient, user_uuid: str, conversation_id: str) -> None:
+    set_user_data(client, user_uuid, {
         'conversation': {
             'last_conversation_id': conversation_id
         }
