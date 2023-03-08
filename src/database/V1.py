@@ -10,6 +10,9 @@ document example:
     },
     'conversation': {
         'last_conversation_id': '1234567890',
+    },
+    'config': {
+        'paid': True,
     }
 }
 '''
@@ -25,8 +28,8 @@ def connect_to_database(server_url: str) -> pymongo.MongoClient:
     return client
 
 
-async def get_user_data(client: pymongo.MongoClient, user_uuid: str) -> dict:
-    user_data = await client[DATABASE_NAME]['user'].find_one(
+def get_user_data(client: pymongo.MongoClient, user_uuid: str):
+    user_data = client[DATABASE_NAME]['user'].find_one(
         {'user_uuid': user_uuid}
     )
     return user_data
@@ -41,8 +44,10 @@ def set_user_data(client: pymongo.MongoClient, user_uuid: str, user_data: dict) 
 '''
 auth getter/setter
 '''
-async def get_user_auth(client: pymongo.MongoClient, user_uuid: str) -> dict:
-    return (await get_user_data(client, user_uuid))['auth']
+def get_user_auth(client: pymongo.MongoClient, user_uuid: str):
+    if (user_data := get_user_data(client, user_uuid)) is None:
+        return None
+    return user_data['auth']
 
 def set_user_auth(client: pymongo.MongoClient, user_uuid: str, user_auth: dict) -> None:
     set_user_data(client, user_uuid, {
@@ -52,8 +57,10 @@ def set_user_auth(client: pymongo.MongoClient, user_uuid: str, user_auth: dict) 
 '''
 last conversation getter/setter
 '''
-async def get_last_conversation(client: pymongo.MongoClient, user_uuid: str) -> str:
-    return (await get_user_data(client, user_uuid))['conversation']['last_conversation_id']
+def get_last_conversation(client: pymongo.MongoClient, user_uuid: str):
+    if (user_data := get_user_data(client, user_uuid)) is None:
+        return None
+    return user_data.get('conversation', {}).get('last_convarsation_id')
 
 def set_last_conversation(client: pymongo.MongoClient, user_uuid: str, conversation_id: str) -> None:
     set_user_data(client, user_uuid, {
