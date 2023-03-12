@@ -12,7 +12,7 @@ intents.message_content = True
 class BotWrapper():
     def __init__(self, db_url: str):
         self.db_client = database.connect_to_database(db_url)
-        self.bot: discord.Client = self.create_app()
+        self.bot: discord.Client = self.create_bot()
 
     def create_bot(self):
         app = discord.Client(intents=intents, command_prefix='/')
