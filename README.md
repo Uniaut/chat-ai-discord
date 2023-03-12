@@ -1,5 +1,5 @@
 # chatgpt-discord
-ChatGPT discord bot with 'your' chagpt session
+ChatGPT discord bot with 'your' chatgpt session
 
 ![](https://github.com/Uniaut/image-storage-for-readme/blob/main/chatgpt-discord.webp)
 
