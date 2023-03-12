@@ -52,7 +52,7 @@ class BotWrapper():
                 last_conversation = database.get_last_conversation(self.db_client, user_uuid)
             except Exception as e:
                 print(e.with_traceback(None))
-                await interaction.response.send_message('You are not registered, please register first')
+                await interaction.response.send_message('You have not registered your access token, please register first')
                 return
             
             try:
@@ -67,5 +67,16 @@ class BotWrapper():
             except Exception as e:
                 print(e.with_traceback(None))
                 await interaction.response.send_message('Something went wrong, please try again later')
+        
+        @tree.command(name='help')
+        async def help_command(interaction: discord.Interaction):
+            '''
+            show help message
+            '''
+            await interaction.response.send_message('''
+                /register <token> - register auth data of chatgpt from user
+                /chatgpt <prompt> - send a prompt to chatgpt, bot replies with a response
+                /help - show help message
+            ''')
 
         return app
