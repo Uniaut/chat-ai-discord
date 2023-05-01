@@ -1,5 +1,5 @@
-# chatgpt-discord
-ChatGPT discord bot with 'your' chatgpt session
+# chat-ai-discord
+AI chatbot discord bot with 'your' authentication.
 
 ![demo-gif](https://user-images.githubusercontent.com/39848764/226289932-638576c3-78c1-478a-9b73-4f658531df75.gif)
 
