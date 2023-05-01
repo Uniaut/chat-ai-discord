@@ -14,6 +14,7 @@ class BotWrapper():
         self.db_client = database.connect_to_database(db_url)
         self.bot: discord.Client = self.create_bot()
 
+
     def create_bot(self):
         app = discord.Client(intents=intents, command_prefix='/')
         tree = app_commands.CommandTree(app)
@@ -80,3 +81,7 @@ class BotWrapper():
             ''')
 
         return app
+    
+
+    def run(self, token: str, **kwargs):
+        self.bot.run(token, **kwargs)
